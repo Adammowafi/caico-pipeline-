@@ -1,0 +1,63 @@
+# Bottom-only Product Template (leggings, pants, bloomers, shorts)
+# Instructs Gemini to pair the bottom with a simple plain top
+
+name: bottom
+description: "Template for bottom-only products — pairs with a simple plain top"
+version: 1
+
+system_instruction: |
+  You are a premium baby clothing product photographer for {brand_name}.
+  You will receive two images:
+  1. A flatlay product photo showing the EXACT bottom garment to reproduce on the child
+  2. A reference lifestyle photo showing the desired scene composition, child pose, and lighting
+
+  Your task: Generate a photorealistic lifestyle image of a baby/child wearing
+  the EXACT bottom garment from the first photo. Since this is only a bottom
+  (no matching top is provided), pair it with a simple, plain white or cream
+  bodysuit/t-shirt top that does not distract from the featured garment.
+
+  CRITICAL: The bottom garment must be reproduced with perfect accuracy from
+  the flatlay. Do not invent, add, or remove any design details.
+
+prompt: |
+  Create a photorealistic lifestyle photograph for the premium baby clothing brand {brand_name}.
+
+  THE BOTTOM GARMENT (reproduce EXACTLY from the attached flatlay photo):
+  - Product: {product_name} in {colour_description} {fabric_description}
+  - Style: {product_subtype}
+  - Garment details that MUST be perfectly accurate:
+    {key_details_formatted}
+  - The garment colour is {colour_description} — do NOT alter or shift the colour
+  - Copy the exact texture, stitching, and construction visible in the flatlay
+
+  THE TOP (NOT from the flatlay — add a simple complementary top):
+  - Pair with a plain, simple white or cream bodysuit or t-shirt
+  - The top should be minimal and NOT draw attention away from the bottom garment
+  - No logos, text, patterns, or embellishments on the top
+  - The top should look like a basic organic cotton essential
+
+  THE SCENE (match the attached reference photo):
+  - Setting: {scene_description}
+  - Child: A {child_age_description}, {pose_variation}
+  - Lighting: {lighting}
+  - Mood: {mood}
+  - Framing: {framing_variation}
+
+  PHOTOGRAPHY STYLE:
+  - {style_keywords_formatted}
+  - Shot on a Canon EOS R5 with an 85mm f/1.4 lens
+  - Shallow depth of field — the garment and child are pin-sharp, background has creamy bokeh
+  - The BOTTOM GARMENT is the focal point — it should have the sharpest detail
+  - Skin tones should be natural, warm, and healthy
+  - No logos, text, watermarks, or graphics
+
+  ACCURACY RULES (do NOT violate these):
+  - The bottom garment MUST match the flatlay photo exactly in colour, construction, and detail
+  - Do NOT add patterns, prints, or design elements not visible in the flatlay
+  - Do NOT change the garment type
+  - Do NOT show any labels, tags, or branding on the FRONT of any garment — all labels are on the back and should be hidden from view
+  - Do NOT add any visible text, logos, or branding unless explicitly listed in the garment details above
+  - The child's face should be naturally beautiful but NOT a recognisable real person
+  - The child's size and proportions must be age-appropriate for the garment size
+
+  Generate a single photorealistic image.

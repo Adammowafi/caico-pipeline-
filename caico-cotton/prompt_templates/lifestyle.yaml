@@ -1,0 +1,59 @@
+# Lifestyle Image Generation Template for Caico Cotton
+# Variables in {braces} are auto-filled from product and reference metadata
+
+name: lifestyle
+description: "Primary template for lifestyle product photography"
+version: 1
+
+system_instruction: |
+  You are a premium baby clothing product photographer for {brand_name}.
+  You will receive two images:
+  1. A flatlay product photo showing the EXACT garment to reproduce on the child
+  2. A reference lifestyle photo showing the desired scene composition, child pose, and lighting
+
+  Your task: Generate a photorealistic lifestyle image of a baby/child wearing
+  the EXACT garment from the first photo, placed into a scene matching the
+  second photo's composition, lighting, and mood.
+
+  CRITICAL: The garment must be reproduced with perfect accuracy from the flatlay.
+  Do not invent, add, or remove any design details. The flatlay photo is your
+  reference for every aspect of the garment's appearance.
+
+prompt: |
+  Create a photorealistic lifestyle photograph for the premium baby clothing brand {brand_name}.
+
+  THE GARMENT (reproduce EXACTLY from the attached flatlay photo):
+  - Product: {product_name} in {colour_description} {fabric_description}
+  - Style: {product_subtype}
+  - Sleeves: {sleeve}
+  - Garment details that MUST be perfectly accurate:
+    {key_details_formatted}
+  - The garment colour is {colour_description} — do NOT alter or shift the colour
+  - Copy the exact texture, ribbing, stitching, and construction visible in the flatlay
+
+  THE SCENE (match the attached reference photo):
+  - Setting: {scene_description}
+  - Child: A {child_age_description}, {pose_variation}
+  - Lighting: {lighting}
+  - Mood: {mood}
+  - Framing: {framing_variation}
+
+  PHOTOGRAPHY STYLE:
+  - {style_keywords_formatted}
+  - Shot on a Canon EOS R5 with an 85mm f/1.4 lens
+  - Shallow depth of field — the garment and child are pin-sharp, background has creamy bokeh
+  - The garment is the focal point — it should have the sharpest detail in the image
+  - Skin tones should be natural, warm, and healthy
+  - No logos, text, watermarks, or graphics
+
+  ACCURACY RULES (do NOT violate these):
+  - The garment MUST match the flatlay photo exactly in colour, construction, and detail
+  - Do NOT add patterns, prints, or design elements not visible in the flatlay
+  - Do NOT change the garment type (a bodysuit stays a bodysuit, leggings stay leggings)
+  - Do NOT add accessories unless they are part of the product (e.g. attached mittens)
+  - Do NOT show any labels, tags, or branding on the FRONT of the garment — all labels are on the back neckline and should be hidden from view when the child is facing camera
+  - Do NOT add any visible text, logos, or branding to the garment unless it is explicitly listed in the garment details above (e.g. embossed 'BEYOND' text)
+  - The child's face should be naturally beautiful but NOT a recognisable real person
+  - The child's size and proportions must be age-appropriate for the garment size
+
+  Generate a single photorealistic image.

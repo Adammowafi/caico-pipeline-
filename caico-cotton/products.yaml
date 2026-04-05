@@ -1,0 +1,773 @@
+# Caico Cotton Product Catalogue — Full Range
+# family: groups colour variants together so --family crossover-bodysuit runs all colours
+# category: "top", "bottom", "full", "accessory" — determines which prompt template to use
+# key_details: CRITICAL for garment accuracy in AI generation
+
+products:
+
+  # ============================================================
+  # CROSSOVER (WRAPOVER) BODYSUIT — Newborn range
+  # ============================================================
+  - id: crossover-bodysuit-alabaster
+    family: crossover-bodysuit
+    name: Crossover Bodysuit
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: bodysuit
+    subtype: crossover wrapover
+    category: full
+    sleeve: long
+    image: newborn-baby-bodysuit-wrapover-alabaster.jpg
+    age_ranges: [NB, 0-3M, 3-6M]
+    key_details:
+      - "wrap-over front that crosses left over right"
+      - "small ribbon tie on the right side of the chest"
+      - "round Caico Cotton logo label at the back neckline"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "long sleeves with simple cuffs"
+      - "smooth flat seams throughout"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: crossover-bodysuit-dusky-blue
+    family: crossover-bodysuit
+    name: Crossover Bodysuit
+    colour: Dusky Blue
+    colour_description: "muted dusty blue"
+    product_type: bodysuit
+    subtype: crossover wrapover
+    category: full
+    sleeve: long
+    image: newborn-baby-bodysuit-wrapover-duky-blue.jpg
+    age_ranges: [NB, 0-3M, 3-6M]
+    key_details:
+      - "wrap-over front that crosses left over right"
+      - "small ribbon tie on the right side of the chest"
+      - "round Caico Cotton logo label at the back neckline"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "long sleeves with simple cuffs"
+      - "smooth flat seams throughout"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: crossover-bodysuit-dusty-blush
+    family: crossover-bodysuit
+    name: Crossover Bodysuit
+    colour: Dusty Blush
+    colour_description: "soft dusty pink/blush"
+    product_type: bodysuit
+    subtype: crossover wrapover
+    category: full
+    sleeve: long
+    image: newborn-baby-bodysuit-wrapover-dusty-blush.jpg
+    age_ranges: [NB, 0-3M, 3-6M]
+    key_details:
+      - "wrap-over front that crosses left over right"
+      - "small ribbon tie on the right side of the chest"
+      - "round Caico Cotton logo label at the back neckline"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "long sleeves with simple cuffs"
+      - "smooth flat seams throughout"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  # ============================================================
+  # LONG SLEEVE BABY BODYSUIT — Baby range
+  # ============================================================
+  - id: longsleeve-bodysuit-alabaster
+    family: longsleeve-bodysuit
+    name: Long Sleeve Bodysuit
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: long
+    image: loungsleeved-baby-bodysuit-alabaster.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "snap buttons on left shoulder for easy dressing"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "long sleeves with simple cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: longsleeve-bodysuit-dusky-blue
+    family: longsleeve-bodysuit
+    name: Long Sleeve Bodysuit
+    colour: Dusky Blue
+    colour_description: "muted dusty blue"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: long
+    image: loungsleeved-baby-bodysuit-dusky-blue.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "snap buttons on left shoulder for easy dressing"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "long sleeves with simple cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: longsleeve-bodysuit-dusty-blush
+    family: longsleeve-bodysuit
+    name: Long Sleeve Bodysuit
+    colour: Dusty Blush
+    colour_description: "soft dusty pink/blush"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: long
+    image: loungsleeved-baby-bodysuit-dusty-blush.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "snap buttons on left shoulder for easy dressing"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "long sleeves with simple cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: longsleeve-bodysuit-sahara
+    family: longsleeve-bodysuit
+    name: Long Sleeve Bodysuit
+    colour: Sahara
+    colour_description: "warm sandy beige/camel"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: long
+    image: loungsleeved-baby-bodysuit-sahara.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "snap buttons on left shoulder for easy dressing"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "long sleeves with simple cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  # ============================================================
+  # SHORT SLEEVE BABY BODYSUIT — Baby range
+  # ============================================================
+  - id: shortsleeve-bodysuit-alabaster
+    family: shortsleeve-bodysuit
+    name: Short Sleeve Bodysuit
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: short
+    image: short-sleeve-baby-bodysuit-alabaster.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "snap buttons on left shoulder"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "short sleeves with turned-up cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: shortsleeve-bodysuit-dusky-blue
+    family: shortsleeve-bodysuit
+    name: Short Sleeve Bodysuit
+    colour: Dusky Blue
+    colour_description: "muted dusty blue"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: short
+    image: short-sleeve-baby-bodysuit-dusky-blue.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "snap buttons on left shoulder"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "short sleeves with turned-up cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: shortsleeve-bodysuit-dusty-blush
+    family: shortsleeve-bodysuit
+    name: Short Sleeve Bodysuit
+    colour: Dusty Blush
+    colour_description: "soft dusty pink/blush"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: short
+    image: short-sleeve-baby-bodysuit-dusty-blush.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "snap buttons on left shoulder"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "short sleeves with turned-up cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: shortsleeve-bodysuit-sahara
+    family: shortsleeve-bodysuit
+    name: Short Sleeve Bodysuit
+    colour: Sahara
+    colour_description: "warm sandy beige/camel"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: short
+    image: short-sleeve-baby-bodysuit-sahara.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "snap buttons on left shoulder"
+      - "snap press-stud buttons at the crotch (3 snaps)"
+      - "short sleeves with turned-up cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  # ============================================================
+  # KIMONO JUMPSUIT — Newborn range
+  # ============================================================
+  - id: kimono-jumpsuit-alabaster
+    family: kimono-jumpsuit
+    name: Kimono Jumpsuit
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: jumpsuit
+    subtype: kimono wrap
+    category: full
+    sleeve: long
+    image: newborn-kimono-jimpsuit-alabaster.jpg
+    age_ranges: [NB, 0-3M, 3-6M]
+    key_details:
+      - "kimono-style wrap front that crosses left over right"
+      - "two ribbon ties at the right side"
+      - "full-length legs with ribbed ankle cuffs"
+      - "snap press-stud buttons along inner leg seam"
+      - "long sleeves"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: kimono-jumpsuit-dusky-blue
+    family: kimono-jumpsuit
+    name: Kimono Jumpsuit
+    colour: Dusky Blue
+    colour_description: "muted dusty blue"
+    product_type: jumpsuit
+    subtype: kimono wrap
+    category: full
+    sleeve: long
+    image: newborn-kimono-jimpsuit-dusky-blue.jpg
+    age_ranges: [NB, 0-3M, 3-6M]
+    key_details:
+      - "kimono-style wrap front that crosses left over right"
+      - "two ribbon ties at the right side"
+      - "full-length legs with ribbed ankle cuffs"
+      - "snap press-stud buttons along inner leg seam"
+      - "long sleeves"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: kimono-jumpsuit-dusty-blush
+    family: kimono-jumpsuit
+    name: Kimono Jumpsuit
+    colour: Dusty Blush
+    colour_description: "soft dusty pink/blush"
+    product_type: jumpsuit
+    subtype: kimono wrap
+    category: full
+    sleeve: long
+    image: newborn-kimono-jimpsuit-dusty-blush.jpg
+    age_ranges: [NB, 0-3M, 3-6M]
+    key_details:
+      - "kimono-style wrap front that crosses left over right"
+      - "two ribbon ties at the right side"
+      - "full-length legs with ribbed ankle cuffs"
+      - "snap press-stud buttons along inner leg seam"
+      - "long sleeves"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  # ============================================================
+  # OVERALL JUMPSUIT — Baby/toddler range
+  # ============================================================
+  - id: overall-jumpsuit-alabaster
+    family: overall-jumpsuit
+    name: Overall Jumpsuit
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: jumpsuit
+    subtype: zip-front overall
+    category: full
+    sleeve: long
+    image: overall-jumpsuit-alabaster.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "full-length front zip from neck to crotch"
+      - "embossed/tone-on-tone 'BEYOND' text on upper chest"
+      - "round crew neckline"
+      - "long sleeves with simple cuffs"
+      - "full-length legs with ribbed ankle cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: overall-jumpsuit-dusky-blue
+    family: overall-jumpsuit
+    name: Overall Jumpsuit
+    colour: Dusky Blue
+    colour_description: "muted dusty blue"
+    product_type: jumpsuit
+    subtype: zip-front overall
+    category: full
+    sleeve: long
+    image: overall-jumpsuit-dusky-blue.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "full-length front zip from neck to crotch"
+      - "embossed/tone-on-tone 'BEYOND' text on upper chest"
+      - "round crew neckline"
+      - "long sleeves with simple cuffs"
+      - "full-length legs with ribbed ankle cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: overall-jumpsuit-dusty-blush
+    family: overall-jumpsuit
+    name: Overall Jumpsuit
+    colour: Dusty Blush
+    colour_description: "soft dusty pink/blush"
+    product_type: jumpsuit
+    subtype: zip-front overall
+    category: full
+    sleeve: long
+    image: overall-jumpsuit-dusty-blush.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "full-length front zip from neck to crotch"
+      - "embossed/tone-on-tone 'BEYOND' text on upper chest"
+      - "round crew neckline"
+      - "long sleeves with simple cuffs"
+      - "full-length legs with ribbed ankle cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: overall-jumpsuit-sahara
+    family: overall-jumpsuit
+    name: Overall Jumpsuit
+    colour: Sahara
+    colour_description: "warm sandy beige/camel"
+    product_type: jumpsuit
+    subtype: zip-front overall
+    category: full
+    sleeve: long
+    image: overall-jumpsuit-sahara.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "full-length front zip from neck to crotch"
+      - "embossed/tone-on-tone 'BEYOND' text on upper chest"
+      - "round crew neckline"
+      - "long sleeves with simple cuffs"
+      - "full-length legs with ribbed ankle cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  # ============================================================
+  # LEGGINGS — Baby/toddler range
+  # ============================================================
+  - id: leggings-alabaster
+    family: leggings
+    name: Leggings
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: leggings
+    subtype: drawstring
+    category: bottom
+    sleeve: null
+    image: leggings-alabaster.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "elasticated waistband with fabric drawstring bow at front"
+      - "round Caico Cotton logo label at waistband"
+      - "embossed/tone-on-tone Caico Cotton logo on left thigh"
+      - "slim tapered fit through leg"
+      - "simple hem at ankle"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: leggings-dusky-blue
+    family: leggings
+    name: Leggings
+    colour: Dusky Blue
+    colour_description: "muted dusty blue"
+    product_type: leggings
+    subtype: drawstring
+    category: bottom
+    sleeve: null
+    image: leggings-dusky-blue.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "elasticated waistband with fabric drawstring bow at front"
+      - "round Caico Cotton logo label at waistband"
+      - "embossed/tone-on-tone Caico Cotton logo on left thigh"
+      - "slim tapered fit through leg"
+      - "simple hem at ankle"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: leggings-dusty-blush
+    family: leggings
+    name: Leggings
+    colour: Dusty Blush
+    colour_description: "soft dusty pink/blush"
+    product_type: leggings
+    subtype: drawstring
+    category: bottom
+    sleeve: null
+    image: leggings-dusty-blush.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "elasticated waistband with fabric drawstring bow at front"
+      - "round Caico Cotton logo label at waistband"
+      - "embossed/tone-on-tone Caico Cotton logo on left thigh"
+      - "slim tapered fit through leg"
+      - "simple hem at ankle"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: leggings-sahara
+    family: leggings
+    name: Leggings
+    colour: Sahara
+    colour_description: "warm sandy beige/camel"
+    product_type: leggings
+    subtype: drawstring
+    category: bottom
+    sleeve: null
+    image: leggings-sahara.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "elasticated waistband with fabric drawstring bow at front"
+      - "round Caico Cotton logo label at waistband"
+      - "embossed/tone-on-tone Caico Cotton logo on left thigh"
+      - "slim tapered fit through leg"
+      - "simple hem at ankle"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  # ============================================================
+  # LOUNGE PANTS — Toddler/kids range
+  # ============================================================
+  - id: lounge-pants-alabaster
+    family: lounge-pants
+    name: Lounge Pants
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: pants
+    subtype: lounge jogger
+    category: bottom
+    sleeve: null
+    image: lounge-pants-alabaster.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "wide V-shaped elasticated waistband"
+      - "embossed/tone-on-tone Caico Cotton logo on left thigh"
+      - "slim tapered fit through leg"
+      - "ribbed cuffs at ankle"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: lounge-pants-dusky-blue
+    family: lounge-pants
+    name: Lounge Pants
+    colour: Dusky Blue
+    colour_description: "muted dusty blue"
+    product_type: pants
+    subtype: lounge jogger
+    category: bottom
+    sleeve: null
+    image: lounge-pants-dusky-blue.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "wide V-shaped elasticated waistband"
+      - "embossed/tone-on-tone Caico Cotton logo on left thigh"
+      - "slim tapered fit through leg"
+      - "ribbed cuffs at ankle"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: lounge-pants-dusty-blush
+    family: lounge-pants
+    name: Lounge Pants
+    colour: Dusty Blush
+    colour_description: "soft dusty pink/blush"
+    product_type: pants
+    subtype: lounge jogger
+    category: bottom
+    sleeve: null
+    image: lounge-pants-dusty-blush.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "wide V-shaped elasticated waistband"
+      - "embossed/tone-on-tone Caico Cotton logo on left thigh"
+      - "slim tapered fit through leg"
+      - "ribbed cuffs at ankle"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: lounge-pants-sahara
+    family: lounge-pants
+    name: Lounge Pants
+    colour: Sahara
+    colour_description: "warm sandy beige/camel"
+    product_type: pants
+    subtype: lounge jogger
+    category: bottom
+    sleeve: null
+    image: lounge-pants-sahara.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "wide V-shaped elasticated waistband"
+      - "embossed/tone-on-tone Caico Cotton logo on left thigh"
+      - "slim tapered fit through leg"
+      - "ribbed cuffs at ankle"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  # ============================================================
+  # LOUNGE TEE — Toddler/kids range
+  # ============================================================
+  - id: lounge-tee-alabaster
+    family: lounge-tee
+    name: Lounge Tee
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: tee
+    subtype: relaxed fit tee
+    category: top
+    sleeve: short
+    image: lounge-tee-alabaster.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "three small embossed dots below the text"
+      - "relaxed boxy fit"
+      - "short sleeves"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: lounge-tee-dusky-blue
+    family: lounge-tee
+    name: Lounge Tee
+    colour: Dusky Blue
+    colour_description: "muted dusty blue"
+    product_type: tee
+    subtype: relaxed fit tee
+    category: top
+    sleeve: short
+    image: lounge-tee-dusky-blue.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "three small embossed dots below the text"
+      - "relaxed boxy fit"
+      - "short sleeves"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: lounge-tee-dusty-blush
+    family: lounge-tee
+    name: Lounge Tee
+    colour: Dusty Blush
+    colour_description: "soft dusty pink/blush"
+    product_type: tee
+    subtype: relaxed fit tee
+    category: top
+    sleeve: short
+    image: lounge-tee-dusty-blush.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "three small embossed dots below the text"
+      - "relaxed boxy fit"
+      - "short sleeves"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: lounge-tee-sahara
+    family: lounge-tee
+    name: Lounge Tee
+    colour: Sahara
+    colour_description: "warm sandy beige/camel"
+    product_type: tee
+    subtype: relaxed fit tee
+    category: top
+    sleeve: short
+    image: lounge-tee-sahar.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "three small embossed dots below the text"
+      - "relaxed boxy fit"
+      - "short sleeves"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  # ============================================================
+  # LOUNGE BLOUSE — Toddler/kids range
+  # ============================================================
+  - id: lounge-blouse-alabaster
+    family: lounge-blouse
+    name: Lounge Blouse
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: blouse
+    subtype: long sleeve sweatshirt
+    category: top
+    sleeve: long
+    image: lounge-blouse-alabaser.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "relaxed fit"
+      - "long sleeves with ribbed cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: lounge-blouse-dusky-blue
+    family: lounge-blouse
+    name: Lounge Blouse
+    colour: Dusky Blue
+    colour_description: "muted dusty blue"
+    product_type: blouse
+    subtype: long sleeve sweatshirt
+    category: top
+    sleeve: long
+    image: lounge-blouse-dusky-blue.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "relaxed fit"
+      - "long sleeves with ribbed cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: lounge-blouse-dusty-blush
+    family: lounge-blouse
+    name: Lounge Blouse
+    colour: Dusty Blush
+    colour_description: "soft dusty pink/blush"
+    product_type: blouse
+    subtype: long sleeve sweatshirt
+    category: top
+    sleeve: long
+    image: lounge-blouse-dusty-blush.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "relaxed fit"
+      - "long sleeves with ribbed cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  - id: lounge-blouse-sahara
+    family: lounge-blouse
+    name: Lounge Blouse
+    colour: Sahara
+    colour_description: "warm sandy beige/camel"
+    product_type: blouse
+    subtype: long sleeve sweatshirt
+    category: top
+    sleeve: long
+    image: lounge-blouse-sahara.jpg
+    age_ranges: [12-18M, 18-24M, 2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "round crew neckline"
+      - "embossed/tone-on-tone 'BEYOND' text across the chest"
+      - "relaxed fit"
+      - "long sleeves with ribbed cuffs"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "smooth organic Egyptian cotton, soft matte finish"
+
+  # ============================================================
+  # BOHO COLLECTION — Muslin fabric, summer range
+  # ============================================================
+  - id: boho-bloomer
+    family: boho-bloomer
+    name: Boho Bloomer
+    colour: Grey
+    colour_description: "light warm grey"
+    product_type: bloomer
+    subtype: bubble shorts
+    category: bottom
+    sleeve: null
+    image: boho-bloomer.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "elasticated waistband with gathered fabric"
+      - "bubble/balloon shape with elasticated leg openings"
+      - "embossed/tone-on-tone Caico Cotton logo"
+      - "lightweight muslin texture with subtle crinkle"
+    fabric_description: "double-layer organic Egyptian cotton muslin, lightweight and breathable"
+
+  - id: boho-romper
+    family: boho-romper
+    name: Boho Romper
+    colour: Grey
+    colour_description: "light warm grey"
+    product_type: romper
+    subtype: henley shortall
+    category: full
+    sleeve: short
+    image: the-boho-romper.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "round henley neckline with 2 wooden buttons"
+      - "short sleeves"
+      - "short legs ending above knee"
+      - "snap press-stud at crotch"
+      - "lightweight muslin texture with subtle crinkle"
+      - "Caico Cotton logo label at back neckline"
+    fabric_description: "double-layer organic Egyptian cotton muslin, lightweight and breathable"
+
+  - id: boho-bib-muslin
+    family: boho-bib
+    name: Boho Bib
+    colour: Grey
+    colour_description: "light warm grey"
+    product_type: bib
+    subtype: muslin bib
+    category: accessory
+    sleeve: null
+    image: boho-bib-muslin.jpg
+    age_ranges: [NB, 0-3M, 3-6M, 6-12M]
+    key_details:
+      - "rounded bib shape"
+      - "snap button fastening at back of neck"
+      - "lightweight muslin texture"
+    fabric_description: "double-layer organic Egyptian cotton muslin"
+
+  - id: tanktop
+    family: tanktop
+    name: Tank Top
+    colour: Grey
+    colour_description: "light warm grey"
+    product_type: tank
+    subtype: sleeveless vest
+    category: top
+    sleeve: null
+    image: tanktop.jpg
+    age_ranges: [0-3M, 3-6M, 6-12M, 12-18M]
+    key_details:
+      - "wide rounded neckline"
+      - "sleeveless with wide armholes"
+      - "relaxed fit"
+      - "lightweight muslin texture"
+    fabric_description: "double-layer organic Egyptian cotton muslin, lightweight and breathable"

@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+caico-cotton/images/outputs/
+caico-cotton/cost_history.json
+bekyabekya/images/outputs/
+*.command
