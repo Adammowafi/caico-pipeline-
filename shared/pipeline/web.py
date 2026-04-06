@@ -469,16 +469,6 @@ def api_data():
     })
 
 
-@app.route("/api/debug-env")
-def api_debug_env():
-    key = os.environ.get("GOOGLE_GENAI_API_KEY", "")
-    return jsonify({
-        "key_set": bool(key),
-        "key_length": len(key),
-        "key_prefix": key[:10] + "..." if key else "NOT SET",
-    })
-
-
 @app.route("/api/costs")
 def api_costs():
     history = load_cost_history(BRAND_DIR)
