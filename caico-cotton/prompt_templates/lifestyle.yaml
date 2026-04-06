@@ -53,7 +53,8 @@ prompt: |
   - Do NOT add accessories unless they are part of the product (e.g. attached mittens)
   - Do NOT show any labels, tags, or branding on the FRONT of the garment — all labels are on the back neckline and should be hidden from view when the child is facing camera
   - Do NOT add any visible text, logos, or branding to the garment unless it is explicitly listed in the garment details above (e.g. embossed 'BEYOND' text)
-  - The child's face should be naturally beautiful but NOT a recognisable real person
+  - The child's face MUST be completely different from the reference photo — generate a new, unique face. Do NOT copy or closely resemble the face in the reference image. The child should be photorealistic and naturally beautiful, but an entirely different baby/child
+  - Use the reference photo ONLY for the scene, pose, lighting, and composition — NOT for the child's facial features, hair, or skin tone
   - The child's size and proportions must be age-appropriate for the garment size
 
   Generate a single photorealistic image.
