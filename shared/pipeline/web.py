@@ -340,6 +340,8 @@ HTML_TEMPLATE = """
             progress.style.display = 'block';
             log.style.display = 'block';
             log.textContent = '';
+            document.getElementById('output-grid').innerHTML = '';
+            document.getElementById('outputs-section').style.display = 'none';
 
             const body = {
                 product_ids: Array.from(selectedProducts),
@@ -371,6 +373,18 @@ HTML_TEMPLATE = """
                             progressBar.style.width = ((msg.completed / msg.total) * 100) + '%';
                             log.textContent += msg.message + '\\n';
                             log.scrollTop = log.scrollHeight;
+                            // Show image immediately if path included
+                            if (msg.image_path) {
+                                const section = document.getElementById('outputs-section');
+                                const grid = document.getElementById('output-grid');
+                                section.style.display = 'block';
+                                const card = document.createElement('div');
+                                card.className = 'output-card';
+                                card.innerHTML = '<img src="/output-image/' + msg.image_path + '">' +
+                                    '<div class="info"><span class="label">' + msg.product + ' · ' + msg.reference + '</span>' +
+                                    '<a class="dl-btn" href="/output-image/' + msg.image_path + '" download="' + msg.product + '_' + msg.reference + '.png">Download</a></div>';
+                                grid.prepend(card);
+                            }
                         } else if (msg.type === 'complete') {
                             log.textContent += '\\n✅ ' + msg.message + '\\n';
                         } else if (msg.type === 'error') {
@@ -383,7 +397,6 @@ HTML_TEMPLATE = """
             btn.disabled = false;
             btn.textContent = 'Generate Images';
             loadCost();
-            loadOutputs();
         }
 
         async function loadCost() {
@@ -755,7 +768,15 @@ def api_generate():
                     output_path = output.save_image(image_bytes, job)
                     result = GenerationResult(job=job, success=True, output_path=output_path, model_used=config.model, prompt_used=job.prompt)
                     output.record_result(result)
-                    yield json.dumps({"type": "progress", "completed": i+1, "total": total, "message": f"✓ {job.product.id} × {job.reference.id}"}) + "\n"
+                    # Include image path so frontend can show it immediately
+                    rel_path = f"{output.batch_date}/{job.product.id}/{job.reference.id}_v{job.variant}.png"
+                    yield json.dumps({
+                        "type": "progress", "completed": i+1, "total": total,
+                        "message": f"✓ {job.product.id} × {job.reference.id}",
+                        "image_path": rel_path,
+                        "product": job.product.id,
+                        "reference": job.reference.id,
+                    }) + "\n"
                 else:
                     result = GenerationResult(job=job, success=False, error="No image returned", model_used=config.model, prompt_used=job.prompt)
                     output.record_result(result)
