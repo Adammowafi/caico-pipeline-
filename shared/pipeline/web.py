@@ -658,76 +658,118 @@ def api_download_all():
 
 @app.route("/api/generate", methods=["POST"])
 def api_generate():
+    """Run the pipeline directly in-process (no subprocess)."""
+    from collections import defaultdict
+    from config import PipelineConfig
+    from matcher import match_products_to_references
+    from prompts import get_template_for_product, render_prompt
+    from api_client import GeminiImageClient
+    from output_manager import OutputManager
+    from models import GenerationResult
+    from grid import build_from_manifest
+    from costs import get_cost_per_image, save_session_cost
+
+    MODEL_MAP = {"pro": "gemini-3-pro-image-preview", "flash": "gemini-3.1-flash-image-preview"}
+
     data = request.json
     family = data.get("family")
     product_ids = data.get("product_ids", [])
-    aspect = data.get("aspect", "")
+    aspect = data.get("aspect", "") or None
     variants = data.get("variants", 1)
-    model = data.get("model", "pro")
+    model_name = MODEL_MAP.get(data.get("model", "pro"), "gemini-3-pro-image-preview")
 
     def generate_stream():
-        cmd = ["python3", str(PIPELINE_DIR / "generate.py")]
+        try:
+            config = PipelineConfig(BRAND_DIR)
+            config.model = model_name
+            config.variants_per_scene = variants
 
-        if family:
-            cmd.extend(["--family", family])
-        elif product_ids:
-            # Run for each product individually
-            pass  # TODO: support multiple individual products
+            products = config.load_products()
+            references = config.load_references()
 
-        cmd.extend(["--variants", str(variants)])
-        cmd.extend(["--model", model])
-        cmd.append("--no-review")
+            jobs = match_products_to_references(
+                products=products,
+                references=references,
+                variants_per_scene=variants,
+                family_filter=family,
+                product_filter=product_ids[0] if product_ids and not family else None,
+                shuffle_colours=True,
+            )
 
-        if aspect:
-            cmd.extend(["--aspect", aspect])
+            if not jobs:
+                yield json.dumps({"type": "error", "message": "No matching jobs found"}) + "\n"
+                return
 
-        env = os.environ.copy()
-        env["GOOGLE_GENAI_API_KEY"] = os.environ.get("GOOGLE_GENAI_API_KEY", "")
+            # Render prompts
+            for job in jobs:
+                template = get_template_for_product(config.templates_dir, job.product)
+                pose_var = getattr(job, '_pose_variation', None)
+                framing_var = getattr(job, '_framing_variation', None)
+                prompt, sys_instr = render_prompt(
+                    template=template, product=job.product, reference=job.reference,
+                    brand_name=config.brand_name, brand_tagline=config.brand_tagline,
+                    style_keywords_formatted=config.style_keywords_formatted,
+                    pose_variation=pose_var, framing_variation=framing_var,
+                )
+                job.prompt = prompt
+                job.system_instruction = sys_instr
 
-        process = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            stdin=subprocess.PIPE,
-            text=True,
-            env=env,
-            cwd=str(PIPELINE_DIR),
-        )
+            total = len(jobs)
+            yield json.dumps({"type": "progress", "completed": 0, "total": total, "message": f"Starting {total} images..."}) + "\n"
 
-        # Auto-confirm
-        process.stdin.write("y\n")
-        process.stdin.flush()
+            client = GeminiImageClient(
+                api_key=config.api_key,
+                model=config.model,
+                image_size=config.image_size,
+                aspect_ratio=aspect,
+                max_retries=config.max_retries,
+                retry_delay=config.retry_delay,
+                rate_limit_rpm=config.rate_limit_rpm,
+            )
+            output = OutputManager(config.outputs_dir)
 
-        total = 0
-        completed = 0
+            for i, job in enumerate(jobs):
+                product_image = config.products_dir / job.product.image
+                reference_image = config.references_dir / job.reference.image
 
-        for line in process.stdout:
-            line = line.strip()
-            if not line:
-                continue
+                if not product_image.exists() or not reference_image.exists():
+                    result = GenerationResult(job=job, success=False, error="Image file not found")
+                    output.record_result(result)
+                    yield json.dumps({"type": "progress", "completed": i+1, "total": total, "message": f"✗ {job.product.id} — image not found"}) + "\n"
+                    continue
 
-            # Parse progress
-            if "Total jobs:" in line:
-                try:
-                    total = int(line.split(":")[-1].strip().split()[0])
-                except ValueError:
-                    pass
+                image_bytes = client.generate(
+                    product_image_path=product_image,
+                    reference_image_path=reference_image,
+                    prompt=job.prompt,
+                    system_instruction=job.system_instruction,
+                )
 
-            if line.startswith("[") and "/" in line.split("]")[0]:
-                completed += 1
-                msg = json.dumps({"type": "progress", "completed": completed, "total": total, "message": line})
-                yield msg + "\n"
-            elif "✓ Saved" in line:
-                msg = json.dumps({"type": "progress", "completed": completed, "total": total, "message": line})
-                yield msg + "\n"
-            elif "✗ Failed" in line:
-                msg = json.dumps({"type": "progress", "completed": completed, "total": total, "message": line})
-                yield msg + "\n"
-            elif "Pipeline Complete" in line:
-                msg = json.dumps({"type": "complete", "message": f"Done! {completed} images generated."})
-                yield msg + "\n"
+                if image_bytes:
+                    output_path = output.save_image(image_bytes, job)
+                    result = GenerationResult(job=job, success=True, output_path=output_path, model_used=config.model, prompt_used=job.prompt)
+                    output.record_result(result)
+                    yield json.dumps({"type": "progress", "completed": i+1, "total": total, "message": f"✓ {job.product.id} × {job.reference.id}"}) + "\n"
+                else:
+                    result = GenerationResult(job=job, success=False, error="No image returned", model_used=config.model, prompt_used=job.prompt)
+                    output.record_result(result)
+                    yield json.dumps({"type": "progress", "completed": i+1, "total": total, "message": f"✗ {job.product.id} — generation failed"}) + "\n"
 
-        process.wait()
+            # Save manifest + grid + costs
+            output.write_manifest()
+            try:
+                build_from_manifest(output.batch_dir)
+            except Exception:
+                pass
+
+            summary = output.get_summary()
+            actual_cost = summary["successful"] * get_cost_per_image(config.model)
+            save_session_cost(BRAND_DIR, config.model, summary["total"], summary["successful"], actual_cost)
+
+            yield json.dumps({"type": "complete", "message": f"Done! {summary['successful']}/{summary['total']} images generated. Cost: ${actual_cost:.2f}"}) + "\n"
+
+        except Exception as e:
+            yield json.dumps({"type": "error", "message": f"Error: {str(e)}"}) + "\n"
 
     return app.response_class(generate_stream(), mimetype="text/plain")
 
