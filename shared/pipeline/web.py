@@ -777,7 +777,11 @@ def api_generate():
         except Exception as e:
             yield json.dumps({"type": "error", "message": f"Error: {str(e)}"}) + "\n"
 
-    return app.response_class(generate_stream(), mimetype="text/plain")
+    return app.response_class(
+        generate_stream(),
+        mimetype="text/plain",
+        headers={"X-Accel-Buffering": "no", "Cache-Control": "no-cache"},
+    )
 
 
 @app.route("/product-image/<path:filename>")
