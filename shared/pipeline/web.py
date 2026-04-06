@@ -320,7 +320,6 @@ HTML_TEMPLATE = """
         }
 
         async function deleteRef(refId) {
-            if (!confirm('Remove reference "' + refId + '"?')) return;
             const resp = await fetch('/api/delete-reference/' + refId, { method: 'DELETE' });
             const data = await resp.json();
             if (data.success) {
