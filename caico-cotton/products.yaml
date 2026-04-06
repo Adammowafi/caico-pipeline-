@@ -699,6 +699,25 @@ products:
   # ============================================================
   # BOHO COLLECTION — Muslin fabric, summer range
   # ============================================================
+  - id: comfy-shorts
+    family: comfy-shorts
+    name: Comfy Shorts
+    colour: Rocky Stone
+    colour_description: "light warm grey/stone"
+    product_type: shorts
+    subtype: drawstring shorts
+    category: bottom
+    sleeve: null
+    image: the-comfy-shots.jpg
+    age_ranges: [2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "elasticated waistband with fabric drawstring bow at front"
+      - "two side pockets"
+      - "relaxed fit, above knee length"
+      - "embossed/tone-on-tone Caico Cotton logo"
+      - "lightweight muslin texture with subtle crinkle"
+    fabric_description: "double-layer organic Egyptian cotton muslin, lightweight and breathable"
+
   - id: boho-bloomer
     family: boho-bloomer
     name: Boho Bloomer
