@@ -29,6 +29,7 @@ prompt: |
     {key_details_formatted}
   - The garment colour is {colour_description} — do NOT alter or shift the colour
   - Copy the exact texture, stitching, and construction visible in the flatlay
+  - The generated garment must be IDENTICAL to the flatlay — if the output garment looks like a different product, the image is wrong
 
   THE TOP (NOT from the flatlay — add a simple complementary top):
   - Pair with a plain, simple white or cream bodysuit or t-shirt

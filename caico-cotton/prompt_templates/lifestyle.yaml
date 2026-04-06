@@ -17,7 +17,10 @@ system_instruction: |
 
   CRITICAL: The garment must be reproduced with perfect accuracy from the flatlay.
   Do not invent, add, or remove any design details. The flatlay photo is your
-  reference for every aspect of the garment's appearance.
+  reference for every aspect of the garment's appearance. Study the flatlay
+  carefully — the wrap direction, button placement, seam positions, and every
+  construction detail must be exactly as shown. Do NOT generate a different or
+  similar-looking garment — it must be the EXACT same item.
 
 prompt: |
   Create a photorealistic lifestyle photograph for the premium baby clothing brand {brand_name}.
@@ -30,6 +33,8 @@ prompt: |
     {key_details_formatted}
   - The garment colour is {colour_description} — do NOT alter or shift the colour
   - Copy the exact texture, ribbing, stitching, and construction visible in the flatlay
+  - If the garment has a wrap/crossover front, the overlap direction MUST match the flatlay photo exactly — do NOT mirror or reverse it
+  - The generated garment must be IDENTICAL to the flatlay — if the output garment looks like a different product, the image is wrong
 
   THE SCENE (match the attached reference photo):
   - Setting: {scene_description}
