@@ -45,6 +45,7 @@ def render_prompt(
     style_keywords_formatted: str = "",
     pose_variation: Optional[str] = None,
     framing_variation: Optional[str] = None,
+    child_age_override: Optional[str] = None,
 ) -> tuple:
     """
     Render a prompt template with product and reference metadata.
@@ -79,7 +80,7 @@ def render_prompt(
         "scene": reference.scene,
         "scene_description": reference.scene_description,
         "child_age_group": reference.child_age_group,
-        "child_age_description": reference.child_age_description,
+        "child_age_description": child_age_override or reference.child_age_description,
         "pose": pose_variation or reference.pose,
         "lighting": reference.lighting,
         "mood": reference.mood,

@@ -160,6 +160,20 @@ HTML_TEMPLATE = """
                     </select>
                 </div>
                 <div>
+                    <label>Child age</label><br>
+                    <select id="child-age">
+                        <option value="">Auto (match product sizes)</option>
+                        <option value="newborn">Newborn (0-3 months)</option>
+                        <option value="baby-small">Small baby (3-6 months)</option>
+                        <option value="baby">Baby (6-12 months)</option>
+                        <option value="toddler-young">Young toddler (12-18 months)</option>
+                        <option value="toddler">Toddler (18-24 months)</option>
+                        <option value="child-small">Small child (2-3 years)</option>
+                        <option value="child">Child (3-5 years)</option>
+                        <option value="child-older">Older child (5-7 years)</option>
+                    </select>
+                </div>
+                <div>
                     <label>Model</label><br>
                     <select id="model">
                         <option value="pro">Nano Banana Pro ($0.13/img)</option>
@@ -349,6 +363,7 @@ HTML_TEMPLATE = """
                 aspect: document.getElementById('aspect').value,
                 variants: parseInt(document.getElementById('variants').value) || 1,
                 model: document.getElementById('model').value,
+                child_age: document.getElementById('child-age').value,
             };
 
             const resp = await fetch('/api/generate', {
@@ -684,12 +699,25 @@ def api_generate():
 
     MODEL_MAP = {"pro": "gemini-3-pro-image-preview", "flash": "gemini-3.1-flash-image-preview"}
 
+    AGE_DESCRIPTIONS = {
+        "newborn": "newborn baby (approximately 0-3 months old)",
+        "baby-small": "small baby (approximately 3-6 months old)",
+        "baby": "baby (approximately 6-12 months old)",
+        "toddler-young": "young toddler (approximately 12-18 months old)",
+        "toddler": "toddler (approximately 18-24 months old)",
+        "child-small": "small child (approximately 2-3 years old)",
+        "child": "young child (approximately 3-5 years old)",
+        "child-older": "child (approximately 5-7 years old)",
+    }
+
     data = request.json
     family = data.get("family")
     product_ids = data.get("product_ids", [])
     aspect = data.get("aspect", "") or None
     variants = data.get("variants", 1)
     model_name = MODEL_MAP.get(data.get("model", "pro"), "gemini-3-pro-image-preview")
+    child_age = data.get("child_age", "")
+    child_age_description = AGE_DESCRIPTIONS.get(child_age, "")
 
     def generate_stream():
         try:
@@ -718,11 +746,13 @@ def api_generate():
                 template = get_template_for_product(config.templates_dir, job.product)
                 pose_var = getattr(job, '_pose_variation', None)
                 framing_var = getattr(job, '_framing_variation', None)
+
                 prompt, sys_instr = render_prompt(
                     template=template, product=job.product, reference=job.reference,
                     brand_name=config.brand_name, brand_tagline=config.brand_tagline,
                     style_keywords_formatted=config.style_keywords_formatted,
                     pose_variation=pose_var, framing_variation=framing_var,
+                    child_age_override=child_age_description if child_age_description else None,
                 )
                 job.prompt = prompt
                 job.system_instruction = sys_instr
