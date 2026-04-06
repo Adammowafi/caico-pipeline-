@@ -469,6 +469,16 @@ def api_data():
     })
 
 
+@app.route("/api/debug-env")
+def api_debug_env():
+    key = os.environ.get("GOOGLE_GENAI_API_KEY", "")
+    return jsonify({
+        "key_set": bool(key),
+        "key_length": len(key),
+        "key_prefix": key[:10] + "..." if key else "NOT SET",
+    })
+
+
 @app.route("/api/costs")
 def api_costs():
     history = load_cost_history(BRAND_DIR)
@@ -717,8 +727,14 @@ def api_generate():
             total = len(jobs)
             yield json.dumps({"type": "progress", "completed": 0, "total": total, "message": f"Starting {total} images..."}) + "\n"
 
+            # Use env var directly as fallback (Railway sets it at runtime)
+            api_key = config.api_key or os.environ.get("GOOGLE_GENAI_API_KEY", "")
+            if not api_key:
+                yield json.dumps({"type": "error", "message": "API key not set. Add GOOGLE_GENAI_API_KEY in Railway Variables."}) + "\n"
+                return
+
             client = GeminiImageClient(
-                api_key=config.api_key,
+                api_key=api_key,
                 model=config.model,
                 image_size=config.image_size,
                 aspect_ratio=aspect,
