@@ -92,10 +92,6 @@ class GeminiImageClient:
         ]
 
         # Config
-        image_config = {}
-        if self.aspect_ratio:
-            image_config["aspect_ratio"] = self.aspect_ratio
-
         config = types.GenerateContentConfig(
             response_modalities=["IMAGE", "TEXT"],
             system_instruction=system_instruction if system_instruction else None,
