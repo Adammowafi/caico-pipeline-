@@ -91,10 +91,24 @@ class GeminiImageClient:
             types.Part.from_text(text=prompt),
         ]
 
-        # Config
+        # Config — image_config with aspect ratio
+        # Note: image_size (4K) requires SDK with ImageConfig.image_size support
+        image_cfg = {}
+        if self.aspect_ratio:
+            image_cfg["aspect_ratio"] = self.aspect_ratio
+
+        # Try to include image_size if SDK supports it
+        if self.image_size:
+            try:
+                test = types.ImageConfig(image_size=self.image_size)
+                image_cfg["image_size"] = self.image_size
+            except Exception:
+                pass  # SDK doesn't support image_size yet
+
         config = types.GenerateContentConfig(
             response_modalities=["IMAGE", "TEXT"],
             system_instruction=system_instruction if system_instruction else None,
+            image_config=types.ImageConfig(**image_cfg) if image_cfg else None,
         )
 
         # Call with retry
