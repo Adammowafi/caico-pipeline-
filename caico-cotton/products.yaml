@@ -699,6 +699,267 @@ products:
   # ============================================================
   # BOHO COLLECTION — Muslin fabric, summer range
   # ============================================================
+  # ============================================================
+  # COTTON BLOOM PRINT VARIANTS
+  # ============================================================
+  - id: overall-jumpsuit-sage-cotton-bloom
+    family: overall-jumpsuit-cotton-bloom
+    name: Overall Jumpsuit Cotton Bloom
+    colour: Sage Cotton Bloom
+    colour_description: "sage green with Cotton Bloom floral print"
+    product_type: jumpsuit
+    subtype: zip-front overall
+    category: full
+    sleeve: long
+    image: overall-jumpsuit-sage-cotton-bloom.jpg
+    age_ranges: [3-6M, 6-9M, 9-12M, 12-18M]
+    key_details:
+      - "full-length front zip"
+      - "Cotton Bloom floral print pattern"
+      - "round crew neckline"
+      - "long sleeves"
+      - "full-length legs with cuffs"
+    fabric_description: "printed organic Egyptian cotton"
+
+  - id: overall-jumpsuit-alabaster-cotton-bloom
+    family: overall-jumpsuit-cotton-bloom
+    name: Overall Jumpsuit Cotton Bloom
+    colour: Alabaster Cotton Bloom
+    colour_description: "cream/off-white with Cotton Bloom floral print"
+    product_type: jumpsuit
+    subtype: zip-front overall
+    category: full
+    sleeve: long
+    image: overall-jumpsuit-alabaster-cotton-bloom.jpg
+    age_ranges: [3-6M, 6-9M, 9-12M, 12-18M]
+    key_details:
+      - "full-length front zip"
+      - "Cotton Bloom floral print pattern"
+      - "round crew neckline"
+      - "long sleeves"
+      - "full-length legs with cuffs"
+    fabric_description: "printed organic Egyptian cotton"
+
+  - id: longsleeve-bodysuit-sage-cotton-bloom
+    family: bodysuit-cotton-bloom
+    name: Long Sleeve Bodysuit Cotton Bloom
+    colour: Sage Cotton Bloom
+    colour_description: "sage green with Cotton Bloom floral print"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: long
+    image: longsleeve-bodysuit-sage-cotton-bloom.jpg
+    age_ranges: [3-6M, 6-9M, 9-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "Cotton Bloom floral print pattern"
+      - "snap buttons on shoulder"
+      - "snap press-stud buttons at crotch"
+      - "long sleeves"
+    fabric_description: "printed organic Egyptian cotton"
+
+  - id: shortsleeve-bodysuit-sage-cotton-bloom
+    family: bodysuit-cotton-bloom
+    name: Short Sleeve Bodysuit Cotton Bloom
+    colour: Sage Cotton Bloom
+    colour_description: "sage green with Cotton Bloom floral print"
+    product_type: bodysuit
+    subtype: crew neck
+    category: full
+    sleeve: short
+    image: shortsleeve-bodysuit-sage-cotton-bloom.jpg
+    age_ranges: [3-6M, 6-9M, 9-12M, 12-18M]
+    key_details:
+      - "round crew neckline"
+      - "Cotton Bloom floral print pattern"
+      - "snap buttons on shoulder"
+      - "snap press-stud buttons at crotch"
+      - "short sleeves"
+    fabric_description: "printed organic Egyptian cotton"
+
+  # ============================================================
+  # PYJAMA SETS
+  # ============================================================
+  - id: pyjamas-longsleeve-sage-cotton-bloom
+    family: pyjamas-longsleeve
+    name: Long Sleeve Pyjamas
+    colour: Sage Cotton Bloom
+    colour_description: "sage green with Cotton Bloom floral print"
+    product_type: pyjamas
+    subtype: long sleeve t-shirt and pants set
+    category: full
+    sleeve: long
+    image: pyjamas-longsleeve-sage-cotton-bloom.jpg
+    age_ranges: [2-3Y, 3-4Y, 4-5Y, 5-6Y, 6-7Y]
+    key_details:
+      - "two-piece set: long sleeve top and matching trousers"
+      - "Cotton Bloom floral print pattern"
+      - "round crew neckline on top"
+      - "elasticated waistband on trousers"
+    fabric_description: "printed organic Egyptian cotton"
+
+  - id: pyjamas-longsleeve-alabaster-cotton-bloom
+    family: pyjamas-longsleeve
+    name: Long Sleeve Pyjamas
+    colour: Alabaster Cotton Bloom
+    colour_description: "cream/off-white with Cotton Bloom floral print"
+    product_type: pyjamas
+    subtype: long sleeve t-shirt and pants set
+    category: full
+    sleeve: long
+    image: pyjamas-longsleeve-alabaster-cotton-bloom.jpg
+    age_ranges: [2-3Y, 3-4Y, 4-5Y, 5-6Y, 6-7Y]
+    key_details:
+      - "two-piece set: long sleeve top and matching trousers"
+      - "Cotton Bloom floral print pattern"
+      - "round crew neckline on top"
+      - "elasticated waistband on trousers"
+    fabric_description: "printed organic Egyptian cotton"
+
+  - id: pyjamas-summer-sage-cotton-bloom
+    family: pyjamas-summer
+    name: Summer Pyjamas
+    colour: Sage Cotton Bloom
+    colour_description: "sage green with Cotton Bloom floral print"
+    product_type: pyjamas
+    subtype: short sleeve t-shirt and shorts set
+    category: full
+    sleeve: short
+    image: pyjamas-summer-sage-cotton-bloom.jpg
+    age_ranges: [2-3Y, 3-4Y, 4-5Y, 5-6Y, 6-7Y]
+    key_details:
+      - "two-piece set: short sleeve top and matching shorts"
+      - "Cotton Bloom floral print pattern"
+      - "round crew neckline on top"
+      - "elasticated waistband on shorts"
+    fabric_description: "printed organic Egyptian cotton"
+
+  - id: pyjamas-summer-alabaster-cotton-bloom
+    family: pyjamas-summer
+    name: Summer Pyjamas
+    colour: Alabaster Cotton Bloom
+    colour_description: "cream/off-white with Cotton Bloom floral print"
+    product_type: pyjamas
+    subtype: short sleeve t-shirt and shorts set
+    category: full
+    sleeve: short
+    image: pyjamas-summer-alabaster-cotton-bloom.jpg
+    age_ranges: [2-3Y, 3-4Y, 4-5Y, 5-6Y, 6-7Y]
+    key_details:
+      - "two-piece set: short sleeve top and matching shorts"
+      - "Cotton Bloom floral print pattern"
+      - "round crew neckline on top"
+      - "elasticated waistband on shorts"
+    fabric_description: "printed organic Egyptian cotton"
+
+  # ============================================================
+  # ACCESSORIES & OTHER
+  # ============================================================
+  - id: muslin-dress
+    family: muslin-dress
+    name: Muslin Dress
+    colour: Grey
+    colour_description: "light warm grey"
+    product_type: dress
+    subtype: muslin dress
+    category: full
+    sleeve: short
+    image: muslin-dress.jpg
+    age_ranges: [2-3Y, 3-4Y, 4-5Y, 5-6Y]
+    key_details:
+      - "lightweight muslin fabric"
+      - "A-line dress shape"
+      - "short sleeves"
+    fabric_description: "double-layer organic Egyptian cotton muslin"
+
+  - id: baby-blanket-sage-cotton-bloom
+    family: baby-blanket
+    name: Baby Blanket
+    colour: Sage Cotton Bloom
+    colour_description: "sage green with Cotton Bloom floral print"
+    product_type: blanket
+    subtype: baby blanket
+    category: accessory
+    sleeve: null
+    image: baby-blanket-sage-cotton-bloom.jpg
+    age_ranges: [NB, 0-3M, 3-6M, 6-12M]
+    key_details:
+      - "Cotton Bloom floral print pattern"
+      - "lightweight and soft"
+      - "generous size for swaddling or covering"
+    fabric_description: "organic Egyptian cotton"
+
+  - id: baby-bonnet-cotton-bloom
+    family: baby-bonnet
+    name: Baby Bonnet
+    colour: Alabaster Cotton Bloom
+    colour_description: "cream/off-white with Cotton Bloom floral print"
+    product_type: bonnet
+    subtype: baby bonnet
+    category: accessory
+    sleeve: null
+    image: baby-bonnet-cotton-bloom.jpg
+    age_ranges: [NB, 0-3M, 3-6M, 6-12M]
+    key_details:
+      - "Cotton Bloom floral print pattern"
+      - "ribbon ties under chin"
+      - "covers ears and back of head"
+    fabric_description: "organic Egyptian cotton"
+
+  - id: baby-mittens-cotton-bloom
+    family: baby-mittens
+    name: Baby Mittens
+    colour: Alabaster Cotton Bloom
+    colour_description: "cream/off-white with Cotton Bloom floral print"
+    product_type: mittens
+    subtype: baby mittens
+    category: accessory
+    sleeve: null
+    image: baby-mittens-cotton-bloom.jpg
+    age_ranges: [NB, 0-3M, 3-6M]
+    key_details:
+      - "Cotton Bloom floral print pattern"
+      - "elasticated wrist"
+      - "prevents baby scratching"
+    fabric_description: "organic Egyptian cotton"
+
+  - id: picot-bodysuit-alabaster
+    family: picot-bodysuit
+    name: Crossover Bodysuit Picot
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: bodysuit
+    subtype: crossover with picot trim
+    category: full
+    sleeve: long
+    image: picot-bodysuit-alabaster.jpg
+    age_ranges: [3-6M]
+    key_details:
+      - "wrap-over crossover front"
+      - "decorative picot trim edging"
+      - "snap closures"
+      - "long sleeves"
+    fabric_description: "smooth organic Egyptian cotton with picot trim detail"
+
+  - id: vest-bodysuit-alabaster
+    family: vest-bodysuit
+    name: Vest Bodysuit
+    colour: Alabaster
+    colour_description: "soft cream/off-white"
+    product_type: bodysuit
+    subtype: sleeveless ribbed vest
+    category: full
+    sleeve: null
+    image: vest-bodysuit-alabaster.jpg
+    age_ranges: [3-6M, 6-9M, 9-12M, 12-18M]
+    key_details:
+      - "sleeveless vest/tank style"
+      - "ribbed fabric texture"
+      - "round neckline"
+      - "snap press-stud buttons at crotch"
+    fabric_description: "ribbed organic Egyptian cotton"
+
   - id: comfy-shorts
     family: comfy-shorts
     name: Comfy Shorts
