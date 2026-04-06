@@ -728,12 +728,18 @@ def api_generate():
             products = config.load_products()
             references = config.load_references()
 
+            # Filter to only the products the user actually selected
+            if product_ids:
+                products = [p for p in products if p.id in product_ids]
+
+            if not products:
+                yield json.dumps({"type": "error", "message": "No products selected"}) + "\n"
+                return
+
             jobs = match_products_to_references(
                 products=products,
                 references=references,
                 variants_per_scene=variants,
-                family_filter=family,
-                product_filter=product_ids[0] if product_ids and not family else None,
                 shuffle_colours=True,
             )
 
