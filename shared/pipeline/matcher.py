@@ -100,6 +100,10 @@ def match_products_to_references(
         matching_refs.sort(key=lambda x: x[1], reverse=True)
         matched_refs = [r for r, _ in matching_refs]
 
+        # Fallback: if no age-matching refs, trust user's selection and use all of them
+        if not matched_refs:
+            matched_refs = list(references)
+
         if not matched_refs:
             continue
 
@@ -153,6 +157,10 @@ def _match_simple(
                 matched_refs.append((ref, score))
 
         matched_refs.sort(key=lambda x: x[1], reverse=True)
+
+        # Fallback: if no age-matching refs, trust user's selection and use all of them
+        if not matched_refs:
+            matched_refs = [(r, 0.0) for r in references]
 
         for ref, _score in matched_refs:
             for variant in range(1, variants_per_scene + 1):
