@@ -80,7 +80,7 @@ def render_prompt(
         "scene": reference.scene,
         "scene_description": reference.scene_description,
         "child_age_group": reference.child_age_group,
-        "child_age_description": child_age_override or reference.child_age_description,
+        "child_age_description": child_age_override or product.age_description,
         "pose": pose_variation or reference.pose,
         "lighting": reference.lighting,
         "mood": reference.mood,
