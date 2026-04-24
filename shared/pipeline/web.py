@@ -89,6 +89,28 @@ HTML_TEMPLATE = """
         .dl-all-btn { background: #555; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; margin-top: 12px; }
         .dl-all-btn:hover { background: #333; }
 
+        .regen-btn { background: #a0522d; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-size: 14px; cursor: pointer; margin-top: 12px; margin-left: 8px; }
+        .regen-btn:hover { background: #7d3f22; }
+        .regen-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        .flag-btn { background: #f5f1ea; color: #7a5a14; border: 1px solid #e0d5bd; padding: 4px 9px; border-radius: 4px; font-size: 11px; cursor: pointer; margin-right: 6px; }
+        .flag-btn:hover { background: #ede4d0; }
+        .flag-btn.flagged { background: #c24f3e; color: white; border-color: #a03a2c; }
+        .flag-btn.flagged:hover { background: #a03a2c; }
+
+        .output-card.is-fixed { border: 2px solid #2a7d4a; }
+        .fixed-badge { background: #2a7d4a; color: white; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 3px; letter-spacing: 0.4px; }
+
+        .flag-panel { padding: 12px; background: #fbf7ef; border-top: 1px solid #ecdfbf; display: none; }
+        .flag-panel.open { display: block; }
+        .flag-panel h4 { font-size: 12px; color: #7a5a14; margin-bottom: 8px; font-weight: 600; }
+        .flag-panel label { display: block; font-size: 12px; margin: 4px 0; color: #444; cursor: pointer; }
+        .flag-panel label input { margin-right: 6px; vertical-align: middle; }
+        .flag-panel textarea { width: 100%; margin-top: 8px; padding: 6px; font-size: 12px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; resize: vertical; min-height: 48px; }
+        .flag-panel .actions { margin-top: 8px; display: flex; gap: 6px; }
+        .flag-panel .save-btn { background: #8b6914; color: white; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; }
+        .flag-panel .clear-btn { background: #eee; color: #555; border: none; padding: 5px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; }
+
         .family-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
         .family-chip { padding: 6px 14px; border: 1px solid #ddd; border-radius: 20px; font-size: 12px; cursor: pointer; transition: all 0.2s; }
         .family-chip:hover { border-color: #c4a882; }
@@ -187,6 +209,7 @@ HTML_TEMPLATE = """
         <div class="section" id="outputs-section" style="display: none;">
             <h2>Generated Images</h2>
             <button class="dl-all-btn" onclick="downloadAll()">Download All as ZIP</button>
+            <button class="regen-btn" id="regen-btn" onclick="regenerateFlagged()" style="display:none;">Regenerate flagged (<span id="flag-count">0</span>)</button>
             <div class="output-grid" id="output-grid"></div>
         </div>
     </div>
@@ -197,6 +220,184 @@ HTML_TEMPLATE = """
         let references = [];
         let selectedFamily = null;
         let selectedProducts = new Set();
+
+        const ISSUE_OPTIONS = [
+            {code: 'wrong-colour', label: 'Wrong colour'},
+            {code: 'design-altered', label: 'Design / details altered'},
+            {code: 'label-visible', label: 'Label or logo visible on front'},
+            {code: 'wrong-wrap', label: 'Wrap / overlap direction reversed'},
+            {code: 'extra-pattern', label: 'Extra pattern or print added'},
+            {code: 'face-too-similar', label: 'Face too similar to reference'},
+            {code: 'wrong-age', label: 'Wrong age / size of child'},
+            {code: 'scene-off-reference', label: 'Scene too far from reference'},
+        ];
+
+        function escapeHtml(s) {
+            return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function buildOutputCard(img) {
+            const flag = img.flag || null;
+            const flagged = !!flag;
+            const card = document.createElement('div');
+            card.className = 'output-card' + (img.is_fixed ? ' is-fixed' : '');
+            card.dataset.rel = img.rel;
+
+            const label = img.is_fixed
+                ? '<span class="fixed-badge">CORRECTED</span> ' + escapeHtml(img.product) + ' · ' + escapeHtml(img.reference)
+                : escapeHtml(img.product) + ' · ' + escapeHtml(img.reference);
+
+            let checkboxesHtml = '';
+            ISSUE_OPTIONS.forEach(opt => {
+                const checked = flag && flag.issues && flag.issues.includes(opt.code) ? 'checked' : '';
+                checkboxesHtml += '<label><input type="checkbox" value="' + opt.code + '" ' + checked + '>' + opt.label + '</label>';
+            });
+
+            const noteVal = flag && flag.note ? escapeHtml(flag.note) : '';
+
+            card.innerHTML =
+                '<img src="/output-image/' + img.path + '">' +
+                '<div class="info"><span class="label">' + label + '</span>' +
+                '<div>' +
+                    '<button class="flag-btn ' + (flagged ? 'flagged' : '') + '" onclick="toggleFlagPanel(this)">' + (flagged ? 'Flagged' : 'Flag issue') + '</button>' +
+                    '<a class="dl-btn" href="/output-image/' + img.path + '" download="' + img.product + '_' + img.reference + '.png">Download</a>' +
+                '</div></div>' +
+                '<div class="flag-panel">' +
+                    '<h4>What needs fixing?</h4>' +
+                    checkboxesHtml +
+                    '<textarea placeholder="Optional note (e.g. sleeves should be shorter, logo should be embossed not printed)">' + noteVal + '</textarea>' +
+                    '<div class="actions">' +
+                        '<button class="save-btn" onclick="saveFlag(this)">Save flag</button>' +
+                        '<button class="clear-btn" onclick="clearFlag(this)">Clear</button>' +
+                    '</div>' +
+                '</div>';
+            return card;
+        }
+
+        function toggleFlagPanel(btn) {
+            const card = btn.closest('.output-card');
+            const panel = card.querySelector('.flag-panel');
+            panel.classList.toggle('open');
+        }
+
+        async function saveFlag(btn) {
+            const card = btn.closest('.output-card');
+            const panel = card.querySelector('.flag-panel');
+            const issues = Array.from(panel.querySelectorAll('input[type=checkbox]:checked')).map(c => c.value);
+            const note = panel.querySelector('textarea').value.trim();
+
+            const resp = await fetch('/api/flag', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({rel: card.dataset.rel, issues, note}),
+            });
+            const data = await resp.json();
+            if (data.success) {
+                const flagBtn = card.querySelector('.flag-btn');
+                if (data.flag) {
+                    flagBtn.classList.add('flagged');
+                    flagBtn.textContent = 'Flagged';
+                } else {
+                    flagBtn.classList.remove('flagged');
+                    flagBtn.textContent = 'Flag issue';
+                }
+                panel.classList.remove('open');
+                refreshFlagCount();
+            }
+        }
+
+        async function clearFlag(btn) {
+            const card = btn.closest('.output-card');
+            const panel = card.querySelector('.flag-panel');
+            panel.querySelectorAll('input[type=checkbox]').forEach(c => c.checked = false);
+            panel.querySelector('textarea').value = '';
+            await fetch('/api/flag', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({rel: card.dataset.rel, issues: [], note: ''}),
+            });
+            const flagBtn = card.querySelector('.flag-btn');
+            flagBtn.classList.remove('flagged');
+            flagBtn.textContent = 'Flag issue';
+            panel.classList.remove('open');
+            refreshFlagCount();
+        }
+
+        async function refreshFlagCount() {
+            const resp = await fetch('/api/flags');
+            const data = await resp.json();
+            const count = Object.keys(data.flags || {}).length;
+            const btn = document.getElementById('regen-btn');
+            document.getElementById('flag-count').textContent = count;
+            btn.style.display = count > 0 ? 'inline-block' : 'none';
+        }
+
+        async function regenerateFlagged() {
+            const btn = document.getElementById('regen-btn');
+            btn.disabled = true;
+            btn.textContent = 'Regenerating...';
+
+            const log = document.getElementById('log');
+            const progress = document.getElementById('progress');
+            const progressBar = document.getElementById('progress-bar');
+            log.style.display = 'block';
+            progress.style.display = 'block';
+            log.textContent = '';
+
+            const body = {
+                aspect: document.getElementById('aspect').value,
+                model: document.getElementById('model').value,
+                child_age: document.getElementById('child-age').value,
+            };
+
+            const resp = await fetch('/api/regenerate-flagged', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(body),
+            });
+            const reader = resp.body.getReader();
+            const decoder = new TextDecoder();
+
+            while (true) {
+                const {value, done} = await reader.read();
+                if (done) break;
+                const text = decoder.decode(value);
+                const lines = text.split('\\n').filter(l => l.trim());
+                for (const line of lines) {
+                    try {
+                        const msg = JSON.parse(line);
+                        if (msg.type === 'progress') {
+                            progressBar.style.width = ((msg.completed / msg.total) * 100) + '%';
+                            log.textContent += msg.message + '\\n';
+                            log.scrollTop = log.scrollHeight;
+                            if (msg.image_path) {
+                                const card = buildOutputCard({
+                                    path: msg.image_path, product: msg.product, reference: msg.reference,
+                                    rel: msg.image_path.split('/').slice(1).join('/'),
+                                    is_fixed: true, flag: null,
+                                });
+                                document.getElementById('output-grid').prepend(card);
+                                // Unflag the original card's button
+                                const originalCard = document.querySelector('[data-rel="' + msg.original_rel + '"]');
+                                if (originalCard) {
+                                    const fb = originalCard.querySelector('.flag-btn');
+                                    fb.classList.remove('flagged');
+                                    fb.textContent = 'Flag issue';
+                                }
+                            }
+                        } else if (msg.type === 'complete') {
+                            log.textContent += '\\n' + msg.message + '\\n';
+                        } else if (msg.type === 'error') {
+                            log.textContent += '\\n' + msg.message + '\\n';
+                        }
+                    } catch(e) {}
+                }
+            }
+
+            btn.disabled = false;
+            refreshFlagCount();
+            loadCost();
+        }
 
         async function loadData() {
             const resp = await fetch('/api/data');
@@ -421,11 +622,11 @@ HTML_TEMPLATE = """
                                 const section = document.getElementById('outputs-section');
                                 const grid = document.getElementById('output-grid');
                                 section.style.display = 'block';
-                                const card = document.createElement('div');
-                                card.className = 'output-card';
-                                card.innerHTML = '<img src="/output-image/' + msg.image_path + '">' +
-                                    '<div class="info"><span class="label">' + msg.product + ' · ' + msg.reference + '</span>' +
-                                    '<a class="dl-btn" href="/output-image/' + msg.image_path + '" download="' + msg.product + '_' + msg.reference + '.png">Download</a></div>';
+                                const card = buildOutputCard({
+                                    path: msg.image_path, product: msg.product, reference: msg.reference,
+                                    rel: msg.image_path.split('/').slice(1).join('/'),
+                                    is_fixed: false, flag: null,
+                                });
                                 grid.prepend(card);
                             }
                         } else if (msg.type === 'complete') {
@@ -460,13 +661,9 @@ HTML_TEMPLATE = """
             grid.innerHTML = '';
 
             data.images.forEach(img => {
-                const card = document.createElement('div');
-                card.className = 'output-card';
-                card.innerHTML = '<img src="/output-image/' + img.path + '">' +
-                    '<div class="info"><span class="label">' + img.product + ' · ' + img.reference + '</span>' +
-                    '<a class="dl-btn" href="/output-image/' + img.path + '" download="' + img.product + '_' + img.reference + '.png">Download</a></div>';
-                grid.appendChild(card);
+                grid.appendChild(buildOutputCard(img));
             });
+            refreshFlagCount();
         }
 
         async function downloadAll() {
@@ -546,26 +743,271 @@ def api_costs():
     })
 
 
+def _latest_batch_dir():
+    """Return the most recent batch directory (by name / date), or None."""
+    outputs_dir = BRAND_DIR / "images" / "outputs"
+    if not outputs_dir.exists():
+        return None
+    batches = sorted([d for d in outputs_dir.iterdir() if d.is_dir()], reverse=True)
+    return batches[0] if batches else None
+
+
+def _load_flags(batch_dir):
+    """Load flags.json for a batch dir; returns {} if missing."""
+    flags_path = batch_dir / "flags.json"
+    if not flags_path.exists():
+        return {}
+    try:
+        with open(flags_path) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def _save_flags(batch_dir, flags):
+    """Persist flags dict to batch_dir/flags.json."""
+    batch_dir.mkdir(parents=True, exist_ok=True)
+    with open(batch_dir / "flags.json", "w") as f:
+        json.dump(flags, f, indent=2)
+
+
 @app.route("/api/outputs")
 def api_outputs():
-    outputs_dir = BRAND_DIR / "images" / "outputs"
     images = []
+    batch = _latest_batch_dir()
 
-    # Get the latest batch
-    batches = sorted([d for d in outputs_dir.iterdir() if d.is_dir()], reverse=True)
-    if batches:
-        batch = batches[0]
+    if batch:
+        flags = _load_flags(batch)
         for product_dir in sorted(batch.iterdir()):
             if not product_dir.is_dir():
                 continue
             for img in sorted(product_dir.glob("*.png")):
+                rel = f"{product_dir.name}/{img.name}"
+                is_fixed = "_fixed" in img.stem
                 images.append({
-                    "path": f"{batch.name}/{product_dir.name}/{img.name}",
+                    "path": f"{batch.name}/{rel}",
                     "product": product_dir.name,
                     "reference": img.stem,
+                    "rel": rel,
+                    "is_fixed": is_fixed,
+                    "flag": flags.get(rel),
                 })
 
     return jsonify({"images": images})
+
+
+@app.route("/api/flag", methods=["POST"])
+def api_flag():
+    """Save or update a flag for an output image."""
+    batch = _latest_batch_dir()
+    if not batch:
+        return jsonify({"success": False, "error": "No batch found"}), 404
+
+    data = request.json or {}
+    rel = data.get("rel", "").strip()
+    issues = data.get("issues", [])
+    note = data.get("note", "").strip()
+
+    if not rel:
+        return jsonify({"success": False, "error": "Missing image path"}), 400
+
+    flags = _load_flags(batch)
+
+    if not issues and not note:
+        # Empty flag = unflag
+        flags.pop(rel, None)
+    else:
+        flags[rel] = {
+            "issues": issues,
+            "note": note,
+            "flagged_at": datetime.now().isoformat(),
+        }
+
+    _save_flags(batch, flags)
+    return jsonify({"success": True, "flag": flags.get(rel)})
+
+
+@app.route("/api/flags")
+def api_flags():
+    batch = _latest_batch_dir()
+    if not batch:
+        return jsonify({"flags": {}})
+    return jsonify({"flags": _load_flags(batch)})
+
+
+# Map of issue codes → corrective instructions appended to the regen prompt
+ISSUE_CORRECTIONS = {
+    "wrong-colour": "The previous attempt has the WRONG colour. Match the flatlay's colour exactly — do not shift, tint, or alter the hue.",
+    "design-altered": "The previous attempt altered the garment's design or construction. Reproduce the flatlay EXACTLY — same seams, same panels, same cut, same details.",
+    "label-visible": "The previous attempt shows a label, tag, or logo on the FRONT of the garment. All labels must be hidden on the back neckline and not visible.",
+    "wrong-wrap": "The previous attempt has the wrap/crossover direction reversed. The overlap direction MUST match the flatlay exactly — do not mirror or flip it.",
+    "extra-pattern": "The previous attempt added a pattern or print that is not on the flatlay. The garment must be plain/solid unless the flatlay clearly shows a print.",
+    "face-too-similar": "The previous attempt's child looks too similar to the reference photo. Generate a COMPLETELY DIFFERENT child — different features, different hair, different skin tone.",
+    "wrong-age": "The previous attempt shows a child of the wrong age. Match the age specified in the prompt precisely — look at proportions, head-to-body ratio, and facial maturity.",
+    "scene-off-reference": "The previous attempt drifted too far from the reference scene. The setting, background, props, colour palette, and mood must match the reference photo closely.",
+}
+
+
+def _build_corrections_block(flag: dict) -> str:
+    """Assemble a corrections instruction block from issue codes + freeform note."""
+    lines = ["CORRECTIONS TO APPLY (the previous attempt failed for these specific reasons — fix every one):"]
+    for code in flag.get("issues", []) or []:
+        text = ISSUE_CORRECTIONS.get(code)
+        if text:
+            lines.append(f"- {text}")
+    note = (flag.get("note") or "").strip()
+    if note:
+        lines.append(f"- Additional correction: {note}")
+    return "\n".join(lines) + "\n"
+
+
+def _next_fixed_path(batch_dir, product_id: str, reference_id: str, variant: int):
+    """Pick a `_fixed.png` filename that doesn't already exist, returning (abs_path, rel_path)."""
+    product_dir = batch_dir / product_id
+    product_dir.mkdir(parents=True, exist_ok=True)
+    base = f"{reference_id}_v{variant}_fixed"
+    candidate = product_dir / f"{base}.png"
+    i = 2
+    while candidate.exists():
+        candidate = product_dir / f"{base}{i}.png"
+        i += 1
+    rel = f"{product_id}/{candidate.name}"
+    return candidate, rel
+
+
+@app.route("/api/regenerate-flagged", methods=["POST"])
+def api_regenerate_flagged():
+    """Regenerate all flagged images with their corrections, saving new files alongside."""
+    from config import PipelineConfig
+    from prompts import get_template_for_product, render_prompt
+    from api_client import GeminiImageClient
+    from models import GenerationJob, SIZE_TO_DESCRIPTION
+
+    batch = _latest_batch_dir()
+    if not batch:
+        return jsonify({"error": "No batch found"}), 404
+
+    flags = _load_flags(batch)
+    if not flags:
+        return jsonify({"error": "No flags to regenerate"}), 400
+
+    MODEL_MAP = {"pro": "gemini-3-pro-image-preview", "flash": "gemini-3.1-flash-image-preview"}
+    data = request.json or {}
+    aspect = data.get("aspect", "") or None
+    model_name = MODEL_MAP.get(data.get("model", "pro"), "gemini-3-pro-image-preview")
+    child_age = data.get("child_age", "")
+    child_age_description = SIZE_TO_DESCRIPTION.get(child_age, "")
+
+    def generate_stream():
+        try:
+            config = PipelineConfig(BRAND_DIR)
+            config.model = model_name
+
+            products_by_id = {p.id: p for p in config.load_products()}
+            refs_by_id = {r.id: r for r in config.load_references()}
+
+            api_key = config.api_key or os.environ.get("GOOGLE_GENAI_API_KEY", "")
+            if not api_key:
+                yield json.dumps({"type": "error", "message": "API key not set."}) + "\n"
+                return
+
+            client = GeminiImageClient(
+                api_key=api_key,
+                model=config.model,
+                image_size=config.image_size,
+                aspect_ratio=aspect,
+                max_retries=config.max_retries,
+                retry_delay=config.retry_delay,
+                rate_limit_rpm=config.rate_limit_rpm,
+            )
+
+            items = list(flags.items())
+            total = len(items)
+            yield json.dumps({"type": "progress", "completed": 0, "total": total, "message": f"Regenerating {total} flagged images..."}) + "\n"
+
+            for i, (rel_path, flag) in enumerate(items):
+                # rel_path is like "muslin-dress/upload-001_v1.png"
+                try:
+                    product_id, filename = rel_path.split("/", 1)
+                except ValueError:
+                    yield json.dumps({"type": "progress", "completed": i+1, "total": total, "message": f"✗ skipped {rel_path} (bad path)"}) + "\n"
+                    continue
+
+                # Parse reference_id and variant from filename
+                stem = Path(filename).stem
+                # Strip any _fixed[N] suffix to get back to the original ref/variant
+                base_stem = stem.split("_fixed")[0]
+                if "_v" not in base_stem:
+                    yield json.dumps({"type": "progress", "completed": i+1, "total": total, "message": f"✗ skipped {rel_path} (no variant)"}) + "\n"
+                    continue
+                reference_id, _, variant_str = base_stem.rpartition("_v")
+                try:
+                    variant = int(variant_str)
+                except ValueError:
+                    variant = 1
+
+                product = products_by_id.get(product_id)
+                reference = refs_by_id.get(reference_id)
+                if not product or not reference:
+                    yield json.dumps({"type": "progress", "completed": i+1, "total": total, "message": f"✗ {rel_path} — product or reference no longer exists"}) + "\n"
+                    continue
+
+                previous_image = batch / product_id / filename
+                if not previous_image.exists():
+                    yield json.dumps({"type": "progress", "completed": i+1, "total": total, "message": f"✗ {rel_path} — previous image missing"}) + "\n"
+                    continue
+
+                template = get_template_for_product(config.templates_dir, product)
+                prompt, sys_instr = render_prompt(
+                    template=template, product=product, reference=reference,
+                    brand_name=config.brand_name, brand_tagline=config.brand_tagline,
+                    style_keywords_formatted=config.style_keywords_formatted,
+                    child_age_override=child_age_description if child_age_description else None,
+                )
+
+                corrections = _build_corrections_block(flag)
+
+                product_image = config.products_dir / product.image
+                reference_image = config.references_dir / reference.image
+
+                image_bytes = client.generate(
+                    product_image_path=product_image,
+                    reference_image_path=reference_image,
+                    prompt=prompt,
+                    system_instruction=sys_instr,
+                    previous_image_path=previous_image,
+                    corrections_block=corrections,
+                )
+
+                if image_bytes:
+                    out_path, out_rel = _next_fixed_path(batch, product_id, reference_id, variant)
+                    with open(out_path, "wb") as f:
+                        f.write(image_bytes)
+
+                    # Clear the flag now that it's been addressed
+                    flags.pop(rel_path, None)
+                    _save_flags(batch, flags)
+
+                    yield json.dumps({
+                        "type": "progress", "completed": i+1, "total": total,
+                        "message": f"✓ fixed {product_id} × {reference_id}",
+                        "image_path": f"{batch.name}/{out_rel}",
+                        "product": product_id,
+                        "reference": reference_id,
+                        "original_rel": rel_path,
+                    }) + "\n"
+                else:
+                    yield json.dumps({"type": "progress", "completed": i+1, "total": total, "message": f"✗ {rel_path} — regen failed"}) + "\n"
+
+            yield json.dumps({"type": "complete", "message": "Regeneration complete"}) + "\n"
+        except Exception as e:
+            yield json.dumps({"type": "error", "message": f"Error: {str(e)}"}) + "\n"
+
+    return app.response_class(
+        generate_stream(),
+        mimetype="text/plain",
+        headers={"X-Accel-Buffering": "no", "Cache-Control": "no-cache"},
+    )
 
 
 @app.route("/api/upload-references", methods=["POST"])

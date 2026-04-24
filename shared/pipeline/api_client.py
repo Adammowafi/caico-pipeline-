@@ -60,6 +60,8 @@ class GeminiImageClient:
         reference_image_path: Path,
         prompt: str,
         system_instruction: str = "",
+        previous_image_path: Optional[Path] = None,
+        corrections_block: str = "",
     ) -> Optional[bytes]:
         """
         Generate a lifestyle image using product flatlay + reference image.
@@ -69,6 +71,8 @@ class GeminiImageClient:
             reference_image_path: Path to the reference lifestyle photo
             prompt: The rendered prompt text
             system_instruction: Optional system instruction
+            previous_image_path: Optional path to a prior attempt being corrected
+            corrections_block: Optional text describing issues to fix
 
         Returns:
             Image bytes (PNG) or None if generation failed
@@ -88,8 +92,25 @@ class GeminiImageClient:
                 mime_type=self._get_mime_type(reference_image_path),
             ),
             types.Part.from_text(text="Above: The reference scene, pose, and lighting to match."),
-            types.Part.from_text(text=prompt),
         ]
+
+        if previous_image_path is not None:
+            previous_bytes = self._load_image_bytes(previous_image_path)
+            contents.extend([
+                types.Part.from_bytes(
+                    data=previous_bytes,
+                    mime_type=self._get_mime_type(previous_image_path),
+                ),
+                types.Part.from_text(
+                    text="Above: The previous attempt — it has specific issues that must be corrected. "
+                         "Use it only to understand what went wrong; regenerate from the flatlay and reference."
+                ),
+            ])
+
+        if corrections_block:
+            contents.append(types.Part.from_text(text=corrections_block))
+
+        contents.append(types.Part.from_text(text=prompt))
 
         # Config — image_config with aspect ratio
         # Note: image_size (4K) requires SDK with ImageConfig.image_size support
