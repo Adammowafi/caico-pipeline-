@@ -37,6 +37,27 @@ SIZE_TO_MONTHS = {
     "One Size": (0, 12),
 }
 
+# Size range → prompt-friendly age description for the UI's age dropdown
+SIZE_TO_DESCRIPTION = {
+    "NB": "newborn baby (approximately 0-1 month old)",
+    "NB-3M": "newborn baby (approximately 0-3 months old)",
+    "0-3M": "newborn baby (approximately 0-3 months old)",
+    "1-3M": "newborn baby (approximately 1-3 months old)",
+    "3-6M": "small baby (approximately 3-6 months old)",
+    "6-9M": "baby (approximately 6-9 months old)",
+    "9-12M": "baby (approximately 9-12 months old)",
+    "6-12M": "baby (approximately 6-12 months old)",
+    "12-18M": "young toddler (approximately 12-18 months old)",
+    "12-18": "young toddler (approximately 12-18 months old)",
+    "18-24M": "toddler (approximately 18-24 months old)",
+    "2-3Y": "young child (approximately 2-3 years old)",
+    "3-4Y": "young child (approximately 3-4 years old)",
+    "4-5Y": "child (approximately 4-5 years old)",
+    "5-6Y": "child (approximately 5-6 years old)",
+    "6-7Y": "child (approximately 6-7 years old)",
+}
+
+
 # Prompt variation modifiers — shuffled per colour to avoid identical scenes
 POSE_VARIATIONS = [
     "looking directly at the camera with a gentle expression",

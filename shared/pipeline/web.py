@@ -160,17 +160,9 @@ HTML_TEMPLATE = """
                     </select>
                 </div>
                 <div>
-                    <label>Child age</label><br>
+                    <label>Child age (matches stock size)</label><br>
                     <select id="child-age">
-                        <option value="">Auto (match product sizes)</option>
-                        <option value="newborn">Newborn (0-3 months)</option>
-                        <option value="baby-small">Small baby (3-6 months)</option>
-                        <option value="baby">Baby (6-12 months)</option>
-                        <option value="toddler-young">Young toddler (12-18 months)</option>
-                        <option value="toddler">Toddler (18-24 months)</option>
-                        <option value="child-small">Small child (2-3 years)</option>
-                        <option value="child">Child (3-5 years)</option>
-                        <option value="child-older">Older child (5-7 years)</option>
+                        <option value="">Auto (full product range)</option>
                     </select>
                 </div>
                 <div>
@@ -244,7 +236,43 @@ HTML_TEMPLATE = """
             }
             renderFamilies();
             renderProducts();
+            renderAgeOptions();
             updateEstimate();
+        }
+
+        // Size ordering used to sort the age dropdown (matches SIZE_TO_MONTHS in models.py)
+        const SIZE_ORDER = ["NB", "NB-3M", "0-3M", "1-3M", "3-6M", "6-9M", "9-12M", "6-12M", "12-18M", "12-18", "18-24M", "2-3Y", "3-4Y", "4-5Y", "5-6Y", "6-7Y"];
+
+        function renderAgeOptions() {
+            const select = document.getElementById('child-age');
+            const prevValue = select.value;
+
+            // Gather age ranges from selected products (union)
+            const available = new Set();
+            products.forEach(p => {
+                if (selectedProducts.has(p.id) && p.age_ranges) {
+                    p.age_ranges.forEach(a => available.add(a));
+                }
+            });
+
+            // Sort by canonical size order
+            const sorted = Array.from(available).sort((a, b) => {
+                const ai = SIZE_ORDER.indexOf(a);
+                const bi = SIZE_ORDER.indexOf(b);
+                return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+            });
+
+            // Rebuild options
+            select.innerHTML = '<option value="">Auto (full product range)</option>';
+            sorted.forEach(size => {
+                const opt = document.createElement('option');
+                opt.value = size;
+                opt.textContent = size;
+                select.appendChild(opt);
+            });
+
+            // Preserve prior selection if still valid
+            if (sorted.includes(prevValue)) select.value = prevValue;
         }
 
         function renderProducts() {
@@ -260,6 +288,7 @@ HTML_TEMPLATE = """
                     if (selectedProducts.has(p.id)) selectedProducts.delete(p.id);
                     else selectedProducts.add(p.id);
                     renderProducts();
+                    renderAgeOptions();
                     updateEstimate();
                 };
                 container.appendChild(card);
@@ -486,7 +515,7 @@ def api_data():
     return jsonify({
         "products": [
             {"id": p.id, "name": p.name, "colour": p.colour, "family": p.family,
-             "category": p.category, "image": p.image}
+             "category": p.category, "image": p.image, "age_ranges": p.age_ranges}
             for p in products
         ],
         "references": [
@@ -698,16 +727,7 @@ def api_generate():
 
     MODEL_MAP = {"pro": "gemini-3-pro-image-preview", "flash": "gemini-3.1-flash-image-preview"}
 
-    AGE_DESCRIPTIONS = {
-        "newborn": "newborn baby (approximately 0-3 months old)",
-        "baby-small": "small baby (approximately 3-6 months old)",
-        "baby": "baby (approximately 6-12 months old)",
-        "toddler-young": "young toddler (approximately 12-18 months old)",
-        "toddler": "toddler (approximately 18-24 months old)",
-        "child-small": "small child (approximately 2-3 years old)",
-        "child": "young child (approximately 3-5 years old)",
-        "child-older": "child (approximately 5-7 years old)",
-    }
+    from models import SIZE_TO_DESCRIPTION
 
     data = request.json
     family = data.get("family")
@@ -716,7 +736,8 @@ def api_generate():
     variants = data.get("variants", 1)
     model_name = MODEL_MAP.get(data.get("model", "pro"), "gemini-3-pro-image-preview")
     child_age = data.get("child_age", "")
-    child_age_description = AGE_DESCRIPTIONS.get(child_age, "")
+    # child_age is now a stock size like "3-4Y" — look up the prompt description
+    child_age_description = SIZE_TO_DESCRIPTION.get(child_age, "")
 
     def generate_stream():
         try:
