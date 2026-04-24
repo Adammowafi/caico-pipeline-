@@ -597,7 +597,7 @@ def api_upload_references():
             "scene": "lifestyle",
             "scene_description": "lifestyle scene matching the reference photo",
             "child_age_group": "infant",
-            "child_age_months": "0-18",
+            "child_age_months": "0-72",
             "pose": "natural pose matching the reference photo",
             "lighting": "natural lighting matching the reference photo",
             "mood": "warm, natural",
