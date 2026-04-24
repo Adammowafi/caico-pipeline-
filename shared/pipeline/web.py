@@ -376,13 +376,15 @@ HTML_TEMPLATE = """
                                     rel: msg.image_path.split('/').slice(1).join('/'),
                                     is_fixed: true, flag: null,
                                 });
-                                document.getElementById('output-grid').prepend(card);
-                                // Unflag the original card's button
+                                // Place the corrected image directly after its original for easy comparison
                                 const originalCard = document.querySelector('[data-rel="' + msg.original_rel + '"]');
-                                if (originalCard) {
+                                if (originalCard && originalCard.parentNode) {
+                                    originalCard.insertAdjacentElement('afterend', card);
                                     const fb = originalCard.querySelector('.flag-btn');
                                     fb.classList.remove('flagged');
                                     fb.textContent = 'Flag issue';
+                                } else {
+                                    document.getElementById('output-grid').prepend(card);
                                 }
                             }
                         } else if (msg.type === 'complete') {
